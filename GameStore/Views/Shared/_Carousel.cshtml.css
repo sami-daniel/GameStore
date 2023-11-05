@@ -1,0 +1,13 @@
+﻿.max-width {
+    max-width: 75%;
+}
+@media screen and (max-width: 767px){
+    .max-width{
+        max-width: 100%;
+    }
+}
+@media screen and (max-width: 575px){
+    #carouselGameStore{
+        display: none;
+    }
+}
