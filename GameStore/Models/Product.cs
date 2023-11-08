@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameStore.Models;
-[Table(name: "Lanches")]
+[Table(name: "Products")]
 public class Product
 {
     [Key]
