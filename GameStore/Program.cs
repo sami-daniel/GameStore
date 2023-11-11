@@ -1,4 +1,6 @@
 using GameStore.Models.Context;
+using GameStore.Repository;
+using GameStore.Repository.InterfacesContext;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     var connection = builder.Configuration.GetConnectionString(name: "DefaultConnection");
     options.UseSqlServer(connectionString: connection);
 });
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 
