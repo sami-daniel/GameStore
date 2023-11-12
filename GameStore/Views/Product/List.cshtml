@@ -2,82 +2,38 @@
 
 @{
     ViewData["Title"] = "List";
+    HashSet<Category> categories = new HashSet<Category>();
+    foreach (var product in Model)
+    {
+        if (!categories.Contains(product.Category))
+        {
+            categories.Add(product.Category);
+        }
+    }
 }
 
-<h1>List</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductShortDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductDetailedDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductUrlImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductUrlThumbnailImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsProductPreferred)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InStock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductShortDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductDetailedDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductUrlImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductUrlThumbnailImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsProductPreferred)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InStock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryDescription)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<h1>@ViewData["Title"]</h1>
+<div class="container-xxl text-center">
+    <div class="row">
+        @foreach (var category in categories)
+        {
+            <div class="col p-3 bg-secondary mx-3 fs-5 text-white">
+                @category.CategoryName
+            </div>
+        }
+    </div>
+    <div class="row flex-nowrap mt-4">
+        @foreach (var category in categories)
+        {
+            <div class="p-2 mx-3 col border-secondary border-1 border-start border-end border-success">
+                @foreach (var product in Model.Where(product => product.Category.CategoryName == category.CategoryName))
+                {
+                    <div class="row p-2 flex-column my-2">
+                        <h6 class="fs-6 fw-bold">@product.ProductName</h6>
+                        <p>@product.ProductPrice.ToString("C")</p>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
